@@ -1,0 +1,58 @@
+html{
+    font-size: 20px;
+}
+h1{
+    text-align: center;
+}
+p{
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+}
+div{
+    width: 100%;
+    border: none;
+    margin: 0;
+    margin: 30px auto;
+    text-align: center;
+}
+input{
+    width: 80%;
+    height: 100px;
+    font-size: 30px;
+}
+.btns{
+    display: flex;
+    flex-direction: row;
+}
+.search-btn{
+    flex: 1;
+    height: 100%;
+    color: white;
+    cursor: pointer;
+    background-color: #01887A;
+}
+.search-btn:first-child{
+    background-color: #4081ED;
+}
+.search-btn:last-child{
+    background-color: #2319DC;
+}
+
+
+/* 浏览器侧边栏 */
+::-webkit-scrollbar-track-piece { 
+    background-color:#f8f8f8;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background-color:#dddddd;
+    background-clip:padding-box;
+    min-height:28px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color:#bbb;
+}
