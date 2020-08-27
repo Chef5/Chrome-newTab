@@ -2,7 +2,7 @@
     "name": "Patrick Jun's newTab",
     "version": "1.0",
     "manifest_version": 2,
-    "description": "Patrick Jun's newTab in Chrome",
+    "description": "Patrick Jun's newTab for Chrome and Firefox",
     "chrome_url_overrides" : {
         "newtab": "newTab.html"
     },
