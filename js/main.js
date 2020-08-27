@@ -39,44 +39,6 @@ document.onkeydown = function(event) {
 
 };
 
-// get请求  跨域
-// var xhr = new XMLHttpRequest();
-// xhr.withCredentials = true;
-// xhr.open('GET', 'https://v1.alapi.cn/api/hitokoto&format=json', true);
-// xhr.send();
-
-// xhr.onreadystatechange = function (e) {
-//   if (xhr.readyState == 4 && xhr.status == 200) {
-//     console.log(xhr.responseText);
-//   }
-// };
-
-//调用Jsonp函数发送jsonp请求  解决了跨域但corb，被浏览器安全策略阻止了
-// jsonp({
-//     url:"https://v1.alapi.cn/api/hitokoto",
-//     data:{
-//         format:"json",
-//     },
-//     success:function(obj) {
-//         console.log(obj);
-//     }
-// });
-
-// function jsonp(obj) {
-//     //定义一个处理Jsonp返回数据的回调函数
-//     window["callback"] = function(object) {
-//         obj.success(JSON.parse(object));
-//     }
-//     var script = document.createElement("script");
-//     //组合请求URL
-//     script.src = obj.url + "?fn=callback";
-//     for(key in obj.data){
-//         script.src +="&" + key + "=" + obj.data[key];
-//     }
-//     //将创建的新节点添加到BOM树上
-//     document.getElementsByTagName("body")[0].appendChild(script);  
-// }
-
 
 var ajaxHdFn = function(uri, data, cb) {
    var getXmlHttpRequest = function() {
