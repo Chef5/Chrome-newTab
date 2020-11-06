@@ -3,15 +3,19 @@
 
 ## 安装
 
-Chrome:
+Chrome（未上线）:
 
 - 开启开发者模式，重启浏览器后
 - 浏览器输入：`chrome://extensions/`
 - 加载本项目文件夹即可完成安装
 
-Firefox:
+Firefox（已上线）:
 
 - 浏览器打开：https://addons.mozilla.org/zh-CN/firefox/addon/patrick-jun-newtab/
+
+Edge（已上线）
+
+- 浏览器打开：https://microsoftedge.microsoft.com/addons/detail/patrick-juns-newtab/ppckmgjomlheildlpplibllkimjmmjpi
 
 ## 效果
 
