@@ -1,58 +1,216 @@
-html{
-    font-size: 20px;
+html,
+body {
+  width: 100%;
+  font-size: 10px;
+  background-color: #18191e;
 }
-h1{
-    text-align: center;
-}
-p{
-    text-align: center;
-    font-size: 14px;
-    color: gray;
-}
-div{
-    width: 100%;
-    border: none;
-    margin: 0;
-    margin: 30px auto;
-    text-align: center;
-}
-input{
-    width: 80%;
-    height: 100px;
-    font-size: 30px;
-}
-.btns{
-    display: flex;
-    flex-direction: row;
-}
-.search-btn{
-    flex: 1;
-    height: 100%;
-    color: white;
-    cursor: pointer;
-    background-color: #01887A;
-}
-.search-btn:first-child{
-    background-color: #4081ED;
-}
-.search-btn:last-child{
-    background-color: #2319DC;
-}
-
-
 /* 浏览器侧边栏 */
-::-webkit-scrollbar-track-piece { 
-    background-color:#f8f8f8;
-}
 ::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+  width: 5px;
+  height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color:#dddddd;
-    background-clip:padding-box;
-    min-height:28px;
+  border-radius: 5px;
+  background-color: transparent;
 }
-::-webkit-scrollbar-thumb:hover {
-    background-color:#bbb;
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: transparent;
+}
+.g-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.g-cbaidu {
+  color: rgba(35, 25, 220, 0.6);
+}
+.g-cbing {
+  color: rgba(1, 136, 122, 0.6);
+}
+.g-cgoogle {
+  color: rgba(64, 129, 237, 0.6);
+}
+.g-cstack {
+  color: rgba(244, 128, 36, 0.6);
+}
+.g-bbaidu {
+  background-color: rgba(35, 25, 220, 0.6);
+}
+.g-bbing {
+  background-color: rgba(1, 136, 122, 0.6);
+}
+.g-bgoogle {
+  background-color: rgba(64, 129, 237, 0.6);
+}
+.g-bstack {
+  background-color: rgba(244, 128, 36, 0.6);
+}
+#vue-root {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+#vue-root .topic {
+  padding: 30px 0;
+}
+#vue-root .topic .tips {
+  padding: 0 20px;
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#vue-root .topic .author {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+#vue-root .search {
+  padding: 0 10%;
+}
+#vue-root .search input {
+  width: 100%;
+  height: 80px;
+  padding: 0 20px;
+  font-size: 30px;
+  outline-width: 0;
+  border-width: 0;
+  border-radius: 20px;
+}
+#vue-root .search .btns {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+#vue-root .search .btns span {
+  display: block;
+  margin-right: 10px;
+  flex: 1;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+#vue-root .search .btns span:last-child {
+  margin-right: 0;
+}
+#vue-root .search .btns span:hover,
+#vue-root .search .btns span:focus,
+#vue-root .search .btns span:focus-visible {
+  font-size: 16px;
+  outline-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+#vue-root .hot {
+  padding: 30px 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+#vue-root .hot .box {
+  margin-right: 20px;
+  padding: 10px 10px 10px 20px;
+  flex: 1;
+  border-radius: 20px;
+  background-color: #1f2025;
+}
+#vue-root .hot .box:last-child {
+  margin-right: 0;
+}
+#vue-root .hot .box-header {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#vue-root .hot .box-header .logo {
+  width: 25px;
+  height: 25px;
+  user-select: none;
+}
+#vue-root .hot .box-header .title {
+  display: block;
+  margin-left: 5px;
+  flex: 1;
+  font-size: 16px;
+  color: #aaa;
+  user-select: none;
+}
+#vue-root .hot .box-header .title span {
+  padding-left: 8px;
+  font-size: 12px;
+}
+#vue-root .hot .box-header .refresh {
+  visibility: hidden;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: url('../imgs/refresh.png') center center / 100% 100% no-repeat;
+  cursor: pointer;
+}
+#vue-root .hot .box-list {
+  padding-right: 10px;
+  height: 420px;
+  font-size: 14px;
+  overflow: auto;
+}
+#vue-root .hot .box-list li {
+  margin-top: 12px;
+}
+#vue-root .hot .box-list li a {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  line-height: 18px;
+}
+#vue-root .hot .box-list li a:link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.1s;
+}
+#vue-root .hot .box-list li a:focus-visible {
+  border: 0;
+  outline-width: 0;
+}
+#vue-root .hot .box-list li a span {
+  margin-right: auto;
+  word-break: break-all;
+  color: #aaa;
+}
+#vue-root .hot .box-list li a span:first-child {
+  width: 24px;
+  padding-right: 3px;
+  color: #aaa;
+}
+#vue-root .hot .box-list li a span:nth-child(2) {
+  flex: 1;
+}
+#vue-root .hot .box-list li a span:last-child {
+  min-width: 50px;
+  font-size: 14px;
+  padding-left: 10px;
+  white-space: nowrap;
+}
+#vue-root .hot .box-list li:focus-visible {
+  border: 0;
+  outline-width: 0;
+}
+#vue-root .hot .box:hover .refresh {
+  visibility: visible;
+  transition: visibility 1s;
+}
+#vue-root .hot .box:hover ::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #18191e;
+  transition: background-color 0.5s;
 }

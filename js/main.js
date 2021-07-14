@@ -1,88 +1,177 @@
-let search = document.getElementById('search')
-let searchBtns = document.getElementsByClassName("search-btn")
+/*
+ * @Author: Patrick-Jun 
+ * @Date: 2021-07-13 21:35:38 
+ * @Last Modified by: Patrick-Jun
+ * @Last Modified time: 2021-07-15 00:26:05
+ */
 
-let width = searchBtns[0].offsetWidth;
-let btns = document.getElementsByClassName("btns")[0]
-btns.style.cssText = "height:" + width + "px;line-height:" + width + "px";
-btns.style.fontSize = width/10 + "px";
+import { config } from './config.js';
+import { time2cn } from './time2cn.js';
 
-setTimeout(()=>{
-    search.focus();
-},0);
-// 谷歌搜索
-searchBtns[0].addEventListener("click",function(){
-    window.location.href = "https://www.google.com/search?&q=" + search.value
-})
-// 必应：国际版
-searchBtns[1].addEventListener("click",function(){
-    window.location.href = "https://cn.bing.com/search?ensearch=1&q=" + search.value
-})
-// 百度
-searchBtns[2].addEventListener("click",function(){
-    window.location.href = "https://www.baidu.com/s?wd=" + search.value
-})
+// 搜索
+const doSearch = (type, keyword) => window.location.href = config.href[type] + keyword;
 
-document.onkeydown = function(event) {
-    var e = event || window.event || arguments.callee.caller.arguments[0];
-    if (e && e.keyCode == 112 || e.keyCode == 13) { // 按F1和回车 
+const vm = new Vue({
+  el: '#vue-root', 
+  data: {
+    keyword: '', // 搜索的词
+    showHot: false, // 是否显示热搜
+    hotColor: ['#cc3939', '#de6b30', '#cc984f', '#aaa'],
+    hot: [
+      {
+        id: 1,
+        logo: './imgs/zhihu.png',
+        name: '知乎热榜',
+        time: '10分钟前',
+        data: [], // { id, link, title, num }
+      },
+      {
+        id: 3,
+        logo: './imgs/weibo.png',
+        name: '微博热搜',
+        time: '10分钟前',
+        data: [],
+      },
+      {
+        id: 38,
+        logo: './imgs/huxiu.png',
+        name: '虎嗅',
+        time: '10分钟前',
+        data: [],
+      },
+    ],
+    hitokoto: {
+      id: '',
+      hitokoto: 'Hello Patrick', // tips
+      type: '',
+      from: '', // from
+      creator: '', // author
+    },
+  },
+  computed: {
+    authorInfo: function() {
+      return [
+        this.hitokoto.from ? `《${this.hitokoto.from}》` : '',
+        this.hitokoto.creator ? `by ${this.hitokoto.creator}` : '',
+      ].join('');
+    },
+  },
+  methods: {
+    // 搜索
+    search: function(type) {
+      doSearch(type, this.keyword);
+    },
+    // 获取全部热搜
+    getHotAll: function() {
+      axios.get(config.hot.all)
+      .then(response => {
+        if (response.status === 200 && response.data.data) {
+          response.data.data.forEach(item => {
+            // 知乎
+            if (item.id === this.hot[0].id) {
+              this.hot[0].time = time2cn(item.create_time);
+              this.hot[0].data = item.data.map(h => ({
+                id: h.id,
+                link: h.link,
+                title: h.title,
+                num: h.extra || '',
+              }));
+            }
+            // 微博
+            if (item.id === this.hot[1].id) {
+              this.hot[1].time = time2cn(item.create_time);
+              this.hot[1].data = item.data.map(h => ({
+                id: h.id,
+                link: h.link,
+                title: h.title,
+                num: h.extra || '',
+              }));
+            }
+            // 虎嗅
+            if (item.id === this.hot[2].id) {
+              this.hot[2].time = time2cn(item.create_time);
+              this.hot[2].data = item.data.map(h => ({
+                id: h.id,
+                link: h.link,
+                title: h.title,
+                num: h.extra || '',
+              }));
+            }
+          });
+          this.showHot = true;
+        }
+      });
+    },
+    // 获取单个热搜
+    getHotItem: function(id, index) {
+      this.hot[index].time = 'loading...';
+      this.hot[index].data = [];
+      axios.get(config.hot.item + id)
+      .then(response => {
+        if (response.status === 200 && response.data.data) {
+          this.hot[index].time = time2cn(response.data.data.time);
+          this.hot[index].data = response.data.data.list.map(h => ({
+            id: h.id || -1,
+            link: h.link,
+            title: h.title,
+            num: h.extra || '',
+          }));
+        }
+      });
+    },
+    // 获取随机一言
+    getHitokoto: function() {
+      axios.post(config.hitokoto.api, config.hitokoto.params)
+      .then(response => {
+        if (response.data.code === 200 && response.data.data) {
+          this.hitokoto = response.data.data;
+        }
+      });
+    },
+    // 获取毒鸡汤
+    getSoul: function() {
+      axios.post(config.soul.api, config.soul.params)
+      .then(response => {
+        if (response.data.code === 200 && response.data.data) {
+          this.hitokoto = {
+            id: '',
+            hitokoto: response.data.data.content,
+            type: '',
+            from: '心灵毒鸡汤',
+            creator: '',
+          };
+        }
+      });
+    },
+  }, 
+  created: function() {
+    // 1随机一言 0毒鸡汤
+    Math.round(Math.random()) ? this.getHitokoto() : this.getSoul();
+    // 获取热搜
+    this.getHotAll();
+  },
+  mounted: function() {
+    // 监听键盘事件
+    document.onkeydown = (event) => {
+      let e = event || window.event || arguments.callee.caller.arguments[0];
+      if (e && e.keyCode == 112) { // 按F1 
         event.preventDefault(); //原F1是chrome帮助
-        window.location.href = "https://www.google.com/search?&q=" + search.value
-    }
-    if (e && e.keyCode == 113) { // 按F2 
+        doSearch('google', this.keyword)
+      }
+      if (e && e.keyCode == 113) { // 按F2 
         event.preventDefault();
-        window.location.href = "https://cn.bing.com/search?ensearch=1&q=" + search.value
-    }
-    if (e && e.keyCode == 114) { // 按F3
+        doSearch('bing', this.keyword)
+      }
+      if (e && e.keyCode == 114 || e.keyCode == 13) { // 按F3和回车
         event.preventDefault();
-        window.location.href = "https://www.baidu.com/s?wd=" + search.value
-    }
+        doSearch('baidu', this.keyword)
+      }
+      if (e && e.keyCode == 115 || e.keyCode == 13) { // 按F4
+        event.preventDefault();
+        doSearch('stack', this.keyword)
+      }
+    };
+  },
+});
 
-};
-
-
-var ajaxHdFn = function(uri, data, cb) {
-   var getXmlHttpRequest = function() {
-    if (window.XMLHttpRequest) {
-       //主流浏览器提供了XMLHttpRequest对象
-       return new XMLHttpRequest();
-     } else if (window.ActiveXObject) {
-       //低版本的IE浏览器没有提供XMLHttpRequest对象
-       //所以必须使用IE浏览器的特定实现ActiveXObject
-       return new ActiveXObject("Microsoft.XMLHttpRequest");
-     }
- 
-   };
-   var xhr = getXmlHttpRequest();
-   xhr.onreadystatechange = function() {
-    //  console.log(xhr.readyState);
-     if (xhr.readyState === 4 && xhr.status === 200) {
-       //获取成功后执行操作
-       //数据在xhr.responseText
-       var resJson = JSON.parse(xhr.responseText)
-       cb(resJson);
-     }
-   };
-   xhr.open("post", uri, true);
-//    xhr.setRequestHeader("DeviceCode", "56");
-//    xhr.setRequestHeader("Source", "API");
-//    xhr.setRequestHeader("Authentication", "72b32a1f754ba1c09b3695e0cb6cde7f");
-   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-   var dataStr = '';
-   for (var i in data) {
-     if (dataStr) {
-       dataStr += '&';
-     }
-     dataStr += i + '=' + data[i];
-   }
-   xhr.send(dataStr);
- };
-
-
- 
-let title = document.getElementById('title')
-let info = document.getElementById('info')
-ajaxHdFn('https://v1.alapi.cn/api/hitokoto', {format: 'json'}, function(res) {
-    // console.log(res)
-    title.innerText = res.data.hitokoto;
-    info.innerText = (res.data.from ? "《" + res.data.from + "》 " : "") + (res.data.creator ? "by：" + res.data.creator : "");
-})
+document.getElementsByClassName('input')[0].focus();

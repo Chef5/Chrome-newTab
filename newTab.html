@@ -1,31 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Patrick Jun's New Tab</title>
-    <link rel="stylesheet" href="style/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Patrick Jun's New Tab</title>
+  <link rel="stylesheet" href="style/reset.css">
+  <link rel="stylesheet" href="style/main.css">
+
 </head>
 <body>
-    <h1 id="title">Hello Patrick</h1>
-    <p id="info"></p>
-    <div>
-        <input type="text" value="" id="search" placeholder="快捷键：F1/Enter-Google, F2-Bing, F3-百度">
+  <div id="vue-root">
+    <!-- 顶部：随机一言 -->
+    <div class="topic">
+      <p class="tips">{{ hitokoto.hitokoto || 'Hello Patrick' }}</p>
+      <p class="author">{{ authorInfo || '' }}</p>
     </div>
-    <div class="btns">
-        <div class="search-btn">
-            Google
-        </div>
-        <div class="search-btn">
-            Bing
-        </div>
-        <div class="search-btn">
-            百度一下
-        </div>
+    <!-- 搜索 -->
+    <div class="search">
+      <input class="input" type="text" v-model="keyword" placeholder="愿：问题一搜就有，疑惑即刻解决！" tabindex="1">
+      <div class="btns">
+        <span class="g-bgoogle" @click="search('google')" tabindex="2">「F1」Google</span>
+        <span class="g-bbing" @click="search('bing')" tabindex="3">「F2」Bing</span>
+        <span class="g-bbaidu" @click="search('baidu')" tabindex="4">「F3」百度一下</span>
+        <span class="g-bstack" @click="search('stack')" tabindex="5">「F4」Stack overflow</span>
+      </div>
     </div>
-    
-    <script src="js/main.js"></script>
+    <!-- 热搜 -->
+    <div class="hot" v-if="showHot">
+      <div class="box" v-for="(index, item) of hot" :key="index">
+        <div class="box-header">
+          <img class="logo" :src="item.logo" alt="weibo">
+          <p class="title">{{ item.name }}<span>({{ item.time || '未知' }})</span></p>
+          <i class="refresh" @click="getHotItem(item.id, index)"></i>
+        </div>
+        <ul class="box-list">
+          <li v-for="(iindex, iitem) of item.data" :key="iitem">
+            <a :href="iitem.link" :title="iitem.title" target="_blank">
+              <span :style="{ color: iindex < 3 ? hotColor[iindex] : hotColor[4] }">{{ iindex + 1 }}. </span>
+              <span>{{ iitem.title }}</span>
+              <span v-if="iitem.num">{{ iitem.num }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script src="js/axios.min.js"></script>
+  <script src="js/vue.csp.min.js"></script>
+  <script src="js/main.js" type="module"></script>
 </body>
 </html>

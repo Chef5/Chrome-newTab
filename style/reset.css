@@ -1,0 +1,51 @@
+/**
+ * 清除默认样式
+ */
+
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Microsoft yahei';
+}
+
+ul,
+ol,
+li,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+dl,
+dt,
+dd,
+input {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	text-decoration: none;
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'Microsoft yahei';
+	font-size: 14px;
+}
+
+a {
+	cursor: pointer;
+}
+
+img {
+	vertical-align: middle;
+	border: 0;
+}
