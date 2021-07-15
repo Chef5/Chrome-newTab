@@ -1,4 +1,4 @@
-# Chrome-newTab v1.0.2
+# Chrome-newTab v1.0.3
 
 自己鼓捣的谷歌浏览器插件，整合Google/必应/百度/Stackoverflow搜索，每日一言，知乎、微博、虎嗅热搜。
 
