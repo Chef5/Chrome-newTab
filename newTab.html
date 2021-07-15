@@ -14,7 +14,7 @@
   <div id="vue-root">
     <!-- 顶部：随机一言 -->
     <div class="topic">
-      <p class="tips">{{ hitokoto.hitokoto || 'Hello Patrick' }}</p>
+      <p class="tips" :title="hitokoto.hitokoto || 'Hello Patrick'">{{ hitokoto.hitokoto || 'Hello Patrick' }}</p>
       <p class="author">{{ authorInfo || '' }}</p>
     </div>
     <!-- 搜索 -->
@@ -46,6 +46,11 @@
         </ul>
       </div>
     </div>
+    <p class="about">
+      <a class="github" href="https://github.com/Patrick-Jun/Chrome-newTab" title="Github" target="_blank">
+        <i></i>
+      </a>
+    </p>
   </div>
   <script src="js/axios.min.js"></script>
   <script src="js/vue.csp.min.js"></script>
