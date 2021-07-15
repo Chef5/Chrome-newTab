@@ -2,7 +2,7 @@
  * @Author: Patrick-Jun 
  * @Date: 2021-07-13 21:35:38 
  * @Last Modified by: Patrick-Jun
- * @Last Modified time: 2021-07-15 00:26:05
+ * @Last Modified time: 2021-07-15 11:33:46
  */
 
 import { config } from './config.js';
@@ -151,27 +151,29 @@ const vm = new Vue({
     this.getHotAll();
   },
   mounted: function() {
-    // 监听键盘事件
-    document.onkeydown = (event) => {
-      let e = event || window.event || arguments.callee.caller.arguments[0];
-      if (e && e.keyCode == 112) { // 按F1 
-        event.preventDefault(); //原F1是chrome帮助
-        doSearch('google', this.keyword)
-      }
-      if (e && e.keyCode == 113) { // 按F2 
-        event.preventDefault();
-        doSearch('bing', this.keyword)
-      }
-      if (e && e.keyCode == 114 || e.keyCode == 13) { // 按F3和回车
-        event.preventDefault();
-        doSearch('baidu', this.keyword)
-      }
-      if (e && e.keyCode == 115 || e.keyCode == 13) { // 按F4
-        event.preventDefault();
-        doSearch('stack', this.keyword)
-      }
-    };
   },
 });
 
+// 监听键盘事件
+document.onkeydown = (event) => {
+  let e = event || window.event || arguments.callee.caller.arguments[0];
+  if (e && e.keyCode == 112) { // 按F1 
+    event.preventDefault(); // 原F1是chrome帮助
+    doSearch('google', vm.keyword)
+  }
+  if (e && e.keyCode == 113) { // 按F2 
+    event.preventDefault();
+    doSearch('bing', vm.keyword)
+  }
+  if (e && e.keyCode == 114 || e.keyCode == 13) { // 按F3和回车
+    event.preventDefault();
+    doSearch('baidu', vm.keyword)
+  }
+  if (e && e.keyCode == 115) { // 按F4
+    event.preventDefault();
+    doSearch('stack', vm.keyword)
+  }
+};
+
+// 聚焦
 document.getElementsByClassName('input')[0].focus();
