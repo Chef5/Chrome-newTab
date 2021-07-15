@@ -1,13 +1,10 @@
 {
   "name": "Patrick Jun's newTab",
   "version": "1.0.3",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "Patrick Jun's newTab for Chrome/Firefox/Edge",
   "chrome_url_overrides" : {
     "newtab": "newTab.html"
   },
-  "content_security_policy": {
-    "script-src": "self",
-    "object-src": "self"
-  }
+  "content_security_policy": "script-src 'self'; object-src 'self'"
 }
